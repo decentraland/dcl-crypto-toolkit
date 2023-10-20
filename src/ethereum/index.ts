@@ -3,7 +3,10 @@ import { createEthereumProvider } from '@dcl/sdk/ethereum-provider'
 
 
 // TODO: remove example data and use data in function params
-
+// OLD SDK6 CODE
+// const convertedMessage = await eth.convertMessageToObject(messageToSign)
+// const { message, signature } = await eth.signMessage(convertedMessage)
+// return { message, signature }
 
 /**
  * Sign a message with your address
@@ -11,11 +14,47 @@ import { createEthereumProvider } from '@dcl/sdk/ethereum-provider'
  * @param messageToSign String to sign
  * @returns Initial message and its signature
  */
-export async function signMessage(messageToSign: string) {
-	// OLD SDK6 CODE
-	// const convertedMessage = await eth.convertMessageToObject(messageToSign)
-	// const { message, signature } = await eth.signMessage(convertedMessage)
-	// return { message, signature }
+export async function signMessageAdvanced(messageToSign: Object, messageName: string, messageType: Object, domainData: Object) {
+
+	let eip712TypedData = {
+		types: {
+			EIP712Domain: domain,
+			[messageName]: messageType
+		},
+		domain: domainData,
+		primaryType: messageName,
+		message: messageToSign
+	}
+
+	let playerAddress = await getPlayerAddress()
+
+	if (playerAddress) {
+
+		let provider = createEthereumProvider()
+		provider.sendAsync({
+			method: 'eth_signTypedData_v4', params: [playerAddress, JSON.stringify(eip712TypedData)],
+			jsonrpc: '2.0',
+			id: 999999999
+		}, async (err, res) => {
+			console.log(res)
+		})
+	}
+}
+
+
+export async function signMessage(messageToSign: Object, messageName: string,) {
+
+	const messageType = typeof messageToSign
+
+	let eip712TypedData = {
+		types: {
+			EIP712Domain: domain,
+			[messageName]: messageType
+		},
+		domain: domainData,
+		primaryType: messageName,
+		message: messageToSign
+	}
 
 	// NEW
 	let playerAddress = await getPlayerAddress()
@@ -32,6 +71,7 @@ export async function signMessage(messageToSign: string) {
 		})
 	}
 }
+
 
 
 // type definitions
