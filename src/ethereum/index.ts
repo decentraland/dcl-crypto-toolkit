@@ -44,7 +44,27 @@ export async function signMessageAdvanced(messageToSign: Object, messageName: st
 
 export async function signMessage(messageToSign: Object, messageName: string,) {
 
-	const messageType = typeof messageToSign
+	let messageType: any[] = []
+
+	Object.keys(messageToSign).forEach((key) => {
+		try {
+			let obj = messageToSign[key]
+			let msgObj: any = { name: obj }
+
+			if (typeof obj === 'string') {
+				msgObj.type = "string"
+			} else if (typeof obj === 'number') {
+				msgObj.type = "uint256"
+			}
+
+			//need to also check if string is an address 0x00
+
+			messageType.push(msgObj)
+		}
+		catch (e) {
+			console.log('error with adding byte', e)
+		}
+	})
 
 	let eip712TypedData = {
 		types: {
