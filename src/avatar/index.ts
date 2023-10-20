@@ -9,22 +9,6 @@
 
 
 
-
-// /**
-//  * Returns profile of an address
-//  *
-//  * @param address ETH address
-//  */
-// export async function getUserInfo(address?: eth.Address) {
-//   const realm = address
-//     ? 'https://peer.decentraland.org'
-//     : await getCatalystUrl()
-//   if (!address) address = await getPlayerAddress()
-//   return (await fetch(`${realm}/content/entities/profiles?pointer=${address?.toLowerCase()}`)
-//     .then((res) => res.json())
-//     .then((res) => (res.length ? res[0] : res))) as Profiles
-// }
-
 // /**
 //  * Returns wearables inventory of an address
 //  *
