@@ -43,15 +43,13 @@ npm i @dcl/crypto-scene-utils @dcl/ecs-scene-utils eth-connect -B
 
 > Note: This command also installs the latest version of the @dcl/ecs-scene-utils and eth-connect libraries, that are dependencies of the crypto utils library
 
-2. Run `dcl start` or `dcl build` so the dependencies are correctly installed.
-
-3. Import the library into the scene's script. Add this line at the start of your `game.ts` file, or any other TypeScript files that require it:
+2. Import the library into the scene's script. Add this line at the start of your `game.ts` file, or any other TypeScript files that require it:
 
 ```ts
 import * as crypto from '@dcl/crypto-scene-utils'
 ```
 
-4. In your TypeScript file, write `crypto.` and let the suggestions of your IDE show the available helpers.
+3. In your TypeScript file, write `crypto.` and let the suggestions of your IDE show the available helpers.
 
 ## MANA Operations
 
@@ -78,12 +76,17 @@ import * as crypto from '@dcl/crypto-scene-utils'
 
 let myWallet = `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 
-button.addComponent(new OnPointerDown(async e => {
-	await crypto.mana.send(myWallet, 100, true).then(
-		// open door
-	)
+pointerEventsSystem.onPointerDown(
+  {
+    entity: myEntity,
+    opts: { button: InputAction.IA_PRIMARY, hoverText: 'Pay to open Door' },
+  },
+  function () {
+    await crypto.mana.send(myWallet, 100, true).then(
+			// open door
+		)
   }
-))
+)
 ```
 
 In this scenario, when players click on the button, they are prompted by Metamask to accept the transaction, paying the required MANA sum plus an ETH gas fee dictated by the market at that time.
@@ -102,8 +105,8 @@ Check the current player's balance with `myBalance()`. This function doesn't req
 import * as crypto from '@dcl/crypto-scene-utils'
 
 executeTask(async () => {
-	let balance = await crypto.mana.myBalance()
-	log(balance)
+  let balance = await crypto.mana.myBalance()
+  log(balance)
 })
 ```
 
@@ -115,8 +118,8 @@ import * as crypto from '@dcl/crypto-scene-utils'
 let myWallet = `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 
 executeTask(async () => {
-	let balance = await crypto.mana.balance(myWallet)
-	log(balance)
+  let balance = await crypto.mana.balance(myWallet)
+  log(balance)
 })
 ```
 
@@ -150,12 +153,17 @@ import * as crypto from '@dcl/crypto-scene-utils'
 
 let myWallet = `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 
-button.addComponent(new OnPointerDown(async e => {
-	await crypto.currency.send('0x6B175474E89094C44Da98b954EedeAC495271d0F', myWallet, 1, true).then(
-		// open door
-	)
+pointerEventsSystem.onPointerDown(
+  {
+    entity: myEntity,
+    opts: { button: InputAction.IA_PRIMARY, hoverText: 'Pay to open Door' },
+  },
+  function () {
+		await crypto.currency.send('0x6B175474E89094C44Da98b954EedeAC495271d0F', myWallet, 1, true).then(
+			// open door
+		)
   }
-))
+)
 ```
 
 In this scenario, when players click on the button, they are prompted by Metamask to accept the transaction, paying the required DAI sum plus an ETH gas fee dictated by the market at that time. Once that transaction is accepted on Metamask, the door opens.
@@ -179,8 +187,11 @@ import * as crypto from '@dcl/crypto-scene-utils'
 let myWallet = `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 
 executeTask(async () => {
-	let balance = await crypto.currency.balance('0x6B175474E89094C44Da98b954EedeAC495271d0F', myWallet)
-	log(balance)
+  let balance = await crypto.currency.balance(
+    '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+    myWallet
+  )
+  log(balance)
 })
 ```
 
@@ -193,7 +204,9 @@ import * as crypto from '@dcl/crypto-scene-utils'
 import { mainnet } from '../node_modules/@dcl/crypto-utils/utils/contract'
 
 executeTask(async () => {
-  const contract = await crypto.currency.getContract(crypto.contract.mainnet.MANAToken)
+  const contract = await crypto.currency.getContract(
+    crypto.contract.mainnet.MANAToken
+  )
   log(contract.contract.totalSupply())
 })
 ```
@@ -236,12 +249,17 @@ import * as crypto from '@dcl/crypto-scene-utils'
 
 let myWallet = `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 
-button.addComponent(new OnPointerDown(async e => {
-	await crypto.nft.transfer(crypto.contract.mainnet.Halloween2019Collection, myWallet, 1, true).then(
-		// open door
-	)
+pointerEventsSystem.onPointerDown(
+  {
+    entity: myEntity,
+    opts: { button: InputAction.IA_PRIMARY, hoverText: 'Pay to open Door' },
+  },
+  function () {
+		await crypto.nft.transfer(crypto.contract.mainnet.Halloween2019Collection, myWallet, 1, true).then(
+				// open door
+		)
   }
-))
+)
 ```
 
 In this scenario, when players click on the button, they are prompted by Metamask to accept the transaction, transfering the NFT token plus paying an ETH gas fee dictated by the market at that time. Once that transaction is accepted on Metamask, the door opens.
@@ -288,7 +306,9 @@ executeTask(async () => {
 The `getContract()` function also returns the `requestManager` object, which you can use to have greater control over the handling of the transaction.
 
 ```ts
-const { contract, requestManager } = await getContract(crypto.contract.mainnet.MANAToken)
+const { contract, requestManager } = await getContract(
+  crypto.contract.mainnet.MANAToken
+)
 ```
 
 ## Signing Messages
@@ -301,7 +321,9 @@ This is a valuable security measure to validate that the player who owns that wa
 import * as crypto from '@dcl/crypto-scene-utils'
 
 executeTask(async () => {
-  const message = await crypto.ethereum.signMessage('msg: this is a top secret message')
+  const message = await crypto.ethereum.signMessage(
+    'msg: this is a top secret message'
+  )
   log(`MESSAGE: `, message)
 })
 ```
@@ -389,7 +411,10 @@ To make the player approve MANA for spending in the Marketplace, you can use the
 import * as crypto from '@dcl/crypto-scene-utils'
 
 executeTask(async () => {
-  await crypto.currency.setApproval(crypto.contract.mainnet.MANAToken, mainnet.Marketplace)
+  await crypto.currency.setApproval(
+    crypto.contract.mainnet.MANAToken,
+    mainnet.Marketplace
+  )
 })
 ```
 
@@ -410,7 +435,7 @@ This function returns an object with three main objects, `bidding`, `buying`, an
 
 Below is an extract of part of what the response looks like:
 
-```
+```json
 {
 	bidding: {
 		mana: { address: "0x0f5d2fb29fb7d3cfee444a200298f468908cc942", authorized: true}
@@ -667,9 +692,11 @@ This example retrieves the data of an address and prints the username in console
 ```ts
 import * as crypto from '@dcl/crypto-scene-utils'
 
-crypto.avatar.getUserInfo('0x521b0fef9cdcf250abaf8e7bc798cbe13fa98692').then((userInfo) => {
-  log(userInfo.metadata.avatars[0].name)
-})
+crypto.avatar
+  .getUserInfo('0x521b0fef9cdcf250abaf8e7bc798cbe13fa98692')
+  .then((userInfo) => {
+    log(userInfo.metadata.avatars[0].name)
+  })
 ```
 
 The `getUserData()` function returns the following information:
@@ -686,46 +713,7 @@ The `getUserData()` function returns the following information:
 
 > Note: For any Ethereum transactions with the player, always use the `ethAddress` field, instead of the `userId`.
 
-### Get a user's snapshot images
-
-Use `getPlayerSnapshots()` to fetch a set of URLs for snapshots of the player wearing the current wearables they have on. These snapshots are available in different resolutions, and both of the face and full body.
-
-The response contains the following data:
-
-- `face`: URL for the full resolution image of the face, with 512x512 pixels
-- `face128`: URL for the face as a 128x128 pixel image
-- `face256`: URL for the face as a 256x256 pixel image
-- `body`: URL for the full resolution image of the face, with 512x1024 pixels
-
-Optionally pass a player id to fetch the snapshots of that player's particular avatar, it will otherwise fetch the snapshots of the player's avatar.
-
-
-```ts
-import * as crypto from '@dcl/crypto-scene-utils'
-
-// create an entity to use as canvas
-let planeEntity = new Entity()
-planeEntity.addComponent(new Transform( {position: new Vector3(8, 1, 8)}))
-planeEntity.addComponent(new PlaneShape())
-engine.addEntity(planeEntity)
-
-// fetch snapshot data
-crypto.avatar.getPlayerSnapshots('0x521b0fef9cdcf250abaf8e7bc798cbe13fa98692').then((snapShots) => {
-  log(snapShots)
-
-  // apply snapshot to the plane entity
-  if (snapShots) {
-    let faceTexture = new Texture(snapShots.face256)
-    let faceMaterial = new Material()
-    faceMaterial.albedoTexture = faceTexture
-    planeEntity.addComponent(faceMaterial)
-  }
-})
-```
-
-This example fetches the snapshots from a specific player, then sets that as a texture on a plane.
-
-
+<!--
 ### Get user inventory
 
 To fetch the full inventory of wearable items owned by a player, use the `getUserInventory()` function.
@@ -834,10 +822,12 @@ crypto.avatar
 ```
 
 > Tip: To see the name of the rarity category, rather than the index, reference the `rarityLevel` enum, for example `rarityLevel[response]`.
+ -->
 
 ### Get data of all wearables
 
 To fetch a list of wearables supported by Decentraland, including their full names, categories, contracts, etc, call the `getListOfWearables()`. This function supports the following filters:
+
 ```ts
 {
   collectionIds: string[]
@@ -851,7 +841,9 @@ To fetch a list of wearables supported by Decentraland, including their full nam
 import * as crypto from '@dcl/crypto-scene-utils'
 
 executeTask(async () => {
-  const someWearables = await crypto.wearable.getListOfWearables({ collectionIds: ['urn:decentraland:ethereum:collections-v1:mf_sammichgamer'] })
+  const someWearables = await crypto.wearable.getListOfWearables({
+    collectionIds: ['urn:decentraland:ethereum:collections-v1:mf_sammichgamer'],
+  })
   log(someWearables)
 })
 ```
@@ -866,7 +858,6 @@ In order to test changes made to this repository in active scenes, do the follow
 
 1. Run `npm run link` on this repository
 2. On the scene directory, after you installed the dependency, run `npm link @dcl/crypto-scene-utils`
-
 
 ## CI/CD
 
