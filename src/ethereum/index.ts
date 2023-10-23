@@ -9,7 +9,7 @@ import { createEthereumProvider } from '@dcl/sdk/ethereum-provider'
 // return { message, signature }
 
 /**
- * Sign a message with your address
+ * Sign an object with your address using EIP 712
  * 
  * @param messageToSign String to sign
  * @returns Initial message and its signature
@@ -41,7 +41,7 @@ export async function signMessageAdvanced(messageToSign: Object, messageName: st
 	}
 }
 
-
+// simple string sign
 export async function signMessage(messageToSign: Object, messageName: string,) {
 
 	let messageType: any[] = []
@@ -83,7 +83,7 @@ export async function signMessage(messageToSign: Object, messageName: string,) {
 
 		let provider = createEthereumProvider()
 		provider.sendAsync({
-			method: 'eth_signTypedData_v4', params: [playerAddress, JSON.stringify(eip712TypedData)],
+			method: 'eth_sign', params: [playerAddress, JSON.stringify(eip712TypedData)],
 			jsonrpc: '2.0',
 			id: 999999999
 		}, async (err, res) => {
