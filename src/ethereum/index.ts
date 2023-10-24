@@ -1,5 +1,6 @@
-import { getPlayerAddress } from '../avatar/index'
+
 import { createEthereumProvider } from '@dcl/sdk/ethereum-provider'
+import { getPlayerAddress } from '../shared/utils'
 
 
 // TODO: remove example data and use data in function params
@@ -42,55 +43,55 @@ export async function signMessageAdvanced(messageToSign: Object, messageName: st
 }
 
 // simple string sign
-export async function signMessage(messageToSign: Object, messageName: string,) {
+// export async function signMessage(messageToSign: Object, messageName: string,) {
 
-	let messageType: any[] = []
+// 	let messageType: any[] = []
 
-	Object.keys(messageToSign).forEach((key) => {
-		try {
-			let obj = messageToSign[key]
-			let msgObj: any = { name: obj }
+// 	Object.keys(messageToSign).forEach((key: string) => {
+// 		try {
+// 			let obj: Object = messageToSign[key]
+// 			let msgObj: any = { name: obj }
 
-			if (typeof obj === 'string') {
-				msgObj.type = "string"
-			} else if (typeof obj === 'number') {
-				msgObj.type = "uint256"
-			}
+// 			if (typeof obj === 'string') {
+// 				msgObj.type = "string"
+// 			} else if (typeof obj === 'number') {
+// 				msgObj.type = "uint256"
+// 			}
 
-			//need to also check if string is an address 0x00
+// 			//need to also check if string is an address 0x00
 
-			messageType.push(msgObj)
-		}
-		catch (e) {
-			console.log('error with adding byte', e)
-		}
-	})
+// 			messageType.push(msgObj)
+// 		}
+// 		catch (e) {
+// 			console.log('error with adding byte', e)
+// 		}
+// 	})
 
-	let eip712TypedData = {
-		types: {
-			EIP712Domain: domain,
-			[messageName]: messageType
-		},
-		domain: domainData,
-		primaryType: messageName,
-		message: messageToSign
-	}
+// 	let eip712TypedData = {
+// 		types: {
+// 			EIP712Domain: domain,
+// 			[messageName]: messageType
+// 		},
+// 		domain: domainData,
+// 		primaryType: messageName,
+// 		message: messageToSign
+// 	}
 
-	// NEW
-	let playerAddress = await getPlayerAddress()
+// 	// NEW
+// 	let playerAddress = await getPlayerAddress()
 
-	if (playerAddress) {
+// 	if (playerAddress) {
 
-		let provider = createEthereumProvider()
-		provider.sendAsync({
-			method: 'eth_sign', params: [playerAddress, JSON.stringify(eip712TypedData)],
-			jsonrpc: '2.0',
-			id: 999999999
-		}, async (err, res) => {
-			console.log(res)
-		})
-	}
-}
+// 		let provider = createEthereumProvider()
+// 		provider.sendAsync({
+// 			method: 'eth_sign', params: [playerAddress, JSON.stringify(eip712TypedData)],
+// 			jsonrpc: '2.0',
+// 			id: 999999999
+// 		}, async (err, res) => {
+// 			console.log(res)
+// 		})
+// 	}
+// }
 
 
 

@@ -7,12 +7,12 @@ import { getPlayerAddress } from '../../shared/utils'
 export async function isAuthorizedAndHasBalance(price: string, userAddress?: string) {
 	const authorized = await allowance(
 		Addresses.MANAToken,
-		userAddress ? userAddress : await getPlayerAddress(),
+		userAddress ? userAddress : await getPlayerAddress() as string,
 		Addresses.MarketplaceProxy
 	)
 	if (+authorized < +toWei(price, 'ether').toString()) return false
 
 	const balance = await myBalance()
-	if (+balance >= +toWei(price, 'ether').toString()) return true
+	if (balance && +balance >= +toWei(price, 'ether').toString()) return true
 	else return false
 }

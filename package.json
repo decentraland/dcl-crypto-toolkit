@@ -1,5 +1,5 @@
 {
-	"name": "@dcl/crypto-scene-utils",
+	"name": "@dcl/crypto-toolkit",
 	"version": "1.0.0",
 	"description": "A collection of helpers to make it easier to build a Decentraland scene using the SDK.",
 	"main": "./dist/index.js",
@@ -23,7 +23,7 @@
 	"license": "Apache-2.0",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/decentraland/decentraland-crypto-utils.git"
+		"url": "git+https://github.com/decentraland/dcl-crypto-toolkit.git"
 	},
 	"files": [
 		"dist",
@@ -49,6 +49,6 @@
 		"yarn": "please use npm"
 	},
 	"dependencies": {
-		"eth-connect": "^6.1.0"
+		"eth-connect": "latest"
 	}
 }

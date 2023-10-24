@@ -1,8 +1,9 @@
 import * as eth from 'eth-connect'
 
 
-import { getPlayerAddress } from '../../avatar/index'
+
 import { getContract } from '../contract'
+import { getPlayerAddress } from '../../shared/utils'
 
 /**
  * Cancel an order on the market
@@ -11,11 +12,12 @@ import { getContract } from '../contract'
  * @param assetId ID of the asset
  */
 export async function cancelOrder(nftAddress: eth.Address, assetId: number) {
-  const { contract } = await getContract()
-  const fromAddress = await getPlayerAddress()
+	const { contract } = await getContract()
+	const fromAddress = await getPlayerAddress()
+	if (!fromAddress) return null
 
-  const res = await contract.cancelOrder(nftAddress, assetId, {
-    from: fromAddress,
-  })
-  return res
+	const res = await contract.cancelOrder(nftAddress, assetId, {
+		from: fromAddress,
+	})
+	return res
 }

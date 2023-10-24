@@ -6,6 +6,7 @@ import currencies from './currencies'
 import { CurrenciesData, MarketData, Currency } from './types/types'
 import abi from './abi'
 import { Kyberswap } from './kyberswap'
+import { getPlayerAddress } from '../../shared/utils'
 
 export async function getContract(contractAddress: eth.Address) {
 	const provider = await createEthereumProvider()
@@ -117,6 +118,7 @@ export async function exchange(
 		.toString()
 
 	const playerAddress = await getPlayerAddress()
+	if (!playerAddress) return null
 	const rate = await getExpectedRate(srcTokenAddress, destTokenAddress, amount)
 
 	const { contract } = await getContract('0x818E6FECD516Ecc3849DAf6845e3EC868087B755')

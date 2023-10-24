@@ -25,7 +25,10 @@ export function send(toAddress: eth.Address, amount: number, waitConfirm: boolea
  */
 export async function myBalance() {
 	const fromAddress = await getPlayerAddress()
-	return ERC20.balance('0x0f5d2fb29fb7d3cfee444a200298f468908cc942', fromAddress)
+	if (fromAddress) {
+		return ERC20.balance('0x0f5d2fb29fb7d3cfee444a200298f468908cc942', fromAddress)
+	} else return null
+
 }
 
 /**

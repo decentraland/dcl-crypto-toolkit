@@ -2,131 +2,131 @@ import { TransactionObject, BlockType, EstimateGasOptions } from '../utils/types
 import * as eth from 'eth-connect'
 
 interface EventOptions {
-  filter?: object
-  fromBlock?: BlockType
-  topics?: string[]
+	filter?: object
+	fromBlock?: BlockType
+	topics?: string[]
 }
 
 export interface Erc721 extends eth.Contract {
-  constructor(jsonInterface: any[], address?: string, options?: any)
-  clone(): Erc721
-  supportsInterface(interfaceId: string | number[]): TransactionObject<boolean>
+	constructor(jsonInterface: any[], address?: string, options?: any): eth.Contract
+	clone(): Erc721
+	supportsInterface(interfaceId: string | number[]): TransactionObject<boolean>
 
-  safeBatchTransferFrom(
-    _from: string,
-    _to: string,
-    _tokenIds: (number | string)[],
-    options?: EstimateGasOptions
-  ): TransactionObject<void>
+	safeBatchTransferFrom(
+		_from: string,
+		_to: string,
+		_tokenIds: (number | string)[],
+		options?: EstimateGasOptions
+	): TransactionObject<void>
 
-  name(): TransactionObject<string>
+	name(): TransactionObject<string>
 
-  getApproved(tokenId: number | string): TransactionObject<string>
+	getApproved(tokenId: number | string): TransactionObject<string>
 
-  approve(
-    to: string,
-    tokenId: number | string,
-    options?: EstimateGasOptions
-  ): TransactionObject<void>
+	approve(
+		to: string,
+		tokenId: number | string,
+		options?: EstimateGasOptions
+	): TransactionObject<void>
 
-  issueTokens(
-    _beneficiaries: string[],
-    _wearableIds: (string | number[])[],
-    options?: EstimateGasOptions
-  ): TransactionObject<void>
+	issueTokens(
+		_beneficiaries: string[],
+		_wearableIds: (string | number[])[],
+		options?: EstimateGasOptions
+	): TransactionObject<void>
 
-  totalSupply(): TransactionObject<string>
+	totalSupply(): TransactionObject<string>
 
-  transferFrom(
-    from: string,
-    to: string,
-    tokenId: number | string,
-    options?: EstimateGasOptions
-  ): TransactionObject<void>
+	transferFrom(
+		from: string,
+		to: string,
+		tokenId: number | string,
+		options?: EstimateGasOptions
+	): TransactionObject<void>
 
-  tokenOfOwnerByIndex(owner: string, index: number | string): TransactionObject<string>
+	tokenOfOwnerByIndex(owner: string, index: number | string): TransactionObject<string>
 
-  addWearable(
-    _wearableId: string,
-    _maxIssuance: number | string,
-    options?: EstimateGasOptions
-  ): TransactionObject<void>
+	addWearable(
+		_wearableId: string,
+		_maxIssuance: number | string,
+		options?: EstimateGasOptions
+	): TransactionObject<void>
 
-  addWearables(
-    _wearableIds: (string | number[])[],
-    _maxIssuances: (number | string)[],
-    options?: EstimateGasOptions
-  ): TransactionObject<void>
+	addWearables(
+		_wearableIds: (string | number[])[],
+		_maxIssuances: (number | string)[],
+		options?: EstimateGasOptions
+	): TransactionObject<void>
 
-  safeTransferFrom(
-    from: string,
-    to: string,
-    tokenId: number | string,
-    options?: EstimateGasOptions
-  ): TransactionObject<void>
+	safeTransferFrom(
+		from: string,
+		to: string,
+		tokenId: number | string,
+		options?: EstimateGasOptions
+	): TransactionObject<void>
 
-  setAllowed(
-    _operator: string,
-    _allowed: boolean,
-    options?: EstimateGasOptions
-  ): TransactionObject<void>
+	setAllowed(
+		_operator: string,
+		_allowed: boolean,
+		options?: EstimateGasOptions
+	): TransactionObject<void>
 
-  tokenByIndex(index: number | string): TransactionObject<string>
+	tokenByIndex(index: number | string): TransactionObject<string>
 
-  setBaseURI(_baseURI: string, options?: EstimateGasOptions): TransactionObject<void>
+	setBaseURI(_baseURI: string, options?: EstimateGasOptions): TransactionObject<void>
 
-  issueToken(
-    _beneficiary: string,
-    _wearableId: string,
-    options?: EstimateGasOptions
-  ): TransactionObject<void>
+	issueToken(
+		_beneficiary: string,
+		_wearableId: string,
+		options?: EstimateGasOptions
+	): TransactionObject<void>
 
-  ownerOf(tokenId: number | string): TransactionObject<string>
+	ownerOf(tokenId: number | string): TransactionObject<string>
 
-  baseURI(): TransactionObject<string>
+	baseURI(): TransactionObject<string>
 
-  balanceOf(owner: string): TransactionObject<string>
+	balanceOf(owner: string): TransactionObject<string>
 
-  renounceOwnership(options?: EstimateGasOptions): TransactionObject<void>
+	renounceOwnership(options?: EstimateGasOptions): TransactionObject<void>
 
-  getWearableKey(_wearableId: string): TransactionObject<string>
+	getWearableKey(_wearableId: string): TransactionObject<string>
 
-  owner(): TransactionObject<string>
+	owner(): TransactionObject<string>
 
-  isOwner(): TransactionObject<boolean>
+	isOwner(): TransactionObject<boolean>
 
-  symbol(): TransactionObject<string>
+	symbol(): TransactionObject<string>
 
-  setApprovalForAll(
-    to: string,
-    approved: boolean,
-    options?: EstimateGasOptions
-  ): TransactionObject<void>
+	setApprovalForAll(
+		to: string,
+		approved: boolean,
+		options?: EstimateGasOptions
+	): TransactionObject<void>
 
-  isComplete(): TransactionObject<boolean>
+	isComplete(): TransactionObject<boolean>
 
-  wearables(arg0: number | string): TransactionObject<string>
+	wearables(arg0: number | string): TransactionObject<string>
 
-  issued(arg0: string | number[]): TransactionObject<string>
+	issued(arg0: string | number[]): TransactionObject<string>
 
-  tokenURI(_tokenId: number | string): TransactionObject<string>
+	tokenURI(_tokenId: number | string): TransactionObject<string>
 
-  allowed(arg0: string): TransactionObject<boolean>
+	allowed(arg0: string): TransactionObject<boolean>
 
-  wearablesCount(): TransactionObject<string>
+	wearablesCount(): TransactionObject<string>
 
-  maxIssuance(arg0: string | number[]): TransactionObject<string>
+	maxIssuance(arg0: string | number[]): TransactionObject<string>
 
-  isApprovedForAll(owner: string, operator: string): TransactionObject<boolean>
+	isApprovedForAll(owner: string, operator: string): TransactionObject<boolean>
 
-  transferOwnership(newOwner: string, options?: EstimateGasOptions): TransactionObject<void>
+	transferOwnership(newOwner: string, options?: EstimateGasOptions): TransactionObject<void>
 
-  batchTransferFrom(
-    _from: string,
-    _to: string,
-    _tokenIds: (number | string)[],
-    options?: EstimateGasOptions
-  ): TransactionObject<void>
+	batchTransferFrom(
+		_from: string,
+		_to: string,
+		_tokenIds: (number | string)[],
+		options?: EstimateGasOptions
+	): TransactionObject<void>
 
-  completeCollection(options?: EstimateGasOptions): TransactionObject<void>
+	completeCollection(options?: EstimateGasOptions): TransactionObject<void>
 }

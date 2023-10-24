@@ -4,7 +4,7 @@ import { getUserData } from '~system/UserIdentity'
 
 export async function getCatalystUrl(): Promise<string> {
 	const { realmInfo } = await getRealm({})
-	if (realmInfo.preview) {
+	if (!realmInfo || realmInfo.isPreview) {
 		return 'https://peer.decentraland.org'
 	} else {
 		return realmInfo.baseUrl
@@ -51,7 +51,7 @@ function mapV2RepresentationIntoV1(representation: any): Representation {
 export async function getPlayerAddress() {
 
 	let userData = await getUserData({})
-	if (userData.data.hasConnectedWeb3) {
+	if (userData && userData.data && userData.data.publicKey && userData.data.hasConnectedWeb3) {
 		return userData.data.publicKey.toLowerCase()
 	} else {
 		console.log("USER HAS NO WALLET")

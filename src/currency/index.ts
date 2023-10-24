@@ -35,6 +35,7 @@ export async function send(
 ) {
 	const { contract, requestManager } = await getContract(contractAddress)
 	const fromAddress = await getPlayerAddress()
+	if (!fromAddress) return null
 	const res = await contract.transfer(toAddress.toLowerCase(), amount, { from: fromAddress })
 	let receipt = null
 	if (waitConfirm) {
@@ -80,6 +81,7 @@ export async function setApproval(
 ) {
 	const { contract, requestManager } = await getContract(contractAddress)
 	const fromAddress = await getPlayerAddress()
+	if (!fromAddress) return null
 
 	const res = await contract.approve(spender, amount, {
 		from: fromAddress,

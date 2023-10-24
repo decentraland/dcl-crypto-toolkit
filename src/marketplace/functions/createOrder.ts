@@ -21,7 +21,7 @@ export async function createOrder(
 ) {
 	const { contract, requestManager } = await getContract()
 	const fromAddress = await getPlayerAddress()
-
+	if (!fromAddress) return null
 	const approval = await isApprovedForAll(nftAddress, fromAddress, contract.address)
 	if (!approval)
 		await setApprovalForAll(nftAddress, contract.address, true).then(async (v: any) => {

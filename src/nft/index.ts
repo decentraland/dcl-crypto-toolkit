@@ -4,7 +4,7 @@ import * as eth from 'eth-connect'
 import abi from './abi'
 import { Erc721 } from './erc721'
 import delay from '../utils/delay'
-import { getPlayerAddress } from '../avatar/index'
+import { getPlayerAddress } from '../shared/utils'
 
 /**
  * Return Contract, Provider and RequestManager
@@ -12,11 +12,11 @@ import { getPlayerAddress } from '../avatar/index'
  * @param contractAddress Smartcontract ETH address
  */
 export async function getContract(contractAddress: eth.Address) {
-  const provider = await createEthereumProvider()
-  const requestManager = new eth.RequestManager(provider)
-  const factory = new eth.ContractFactory(requestManager, abi)
-  const contract = (await factory.at(contractAddress)) as Erc721
-  return { contract, provider, requestManager }
+	const provider = await createEthereumProvider()
+	const requestManager = new eth.RequestManager(provider)
+	const factory = new eth.ContractFactory(requestManager, abi)
+	const contract = (await factory.at(contractAddress)) as Erc721
+	return { contract, provider, requestManager }
 }
 
 /**
@@ -28,30 +28,31 @@ export async function getContract(contractAddress: eth.Address) {
  * @param waitConfirm Resolve promise when tx is mined or not
  */
 export async function transfer(
-  contractAddress: eth.Address,
-  toAddress: eth.Address,
-  tokenId: number,
-  waitConfirm: boolean = false
+	contractAddress: eth.Address,
+	toAddress: eth.Address,
+	tokenId: number,
+	waitConfirm: boolean = false
 ) {
-  const { contract, requestManager } = await getContract(contractAddress)
-  const fromAddress =  await getPlayerAddress()
+	const { contract, requestManager } = await getContract(contractAddress)
+	const fromAddress = await getPlayerAddress()
+	if (!fromAddress) return null
 
-  const res = await contract.transferFrom(
-    fromAddress.toLowerCase(),
-    toAddress.toLowerCase(),
-    tokenId,
-    {
-      from: fromAddress,
-    }
-  )
-  let receipt = null
-  if (waitConfirm) {
-    while (receipt == null) {
-      await delay(2000)
-      receipt = await requestManager.eth_getTransactionReceipt(res.toString())
-    }
-    return receipt
-  } else return res
+	const res = await contract.transferFrom(
+		fromAddress.toLowerCase(),
+		toAddress.toLowerCase(),
+		tokenId,
+		{
+			from: fromAddress,
+		}
+	)
+	let receipt = null
+	if (waitConfirm) {
+		while (receipt == null) {
+			await delay(2000)
+			receipt = await requestManager.eth_getTransactionReceipt(res.toString())
+		}
+		return receipt
+	} else return res
 }
 
 /**
@@ -62,13 +63,13 @@ export async function transfer(
  * @param approved Boolean for approval
  */
 export async function setApprovalForAll(
-  contractAddress: eth.Address,
-  operator: eth.Address,
-  approved: boolean = true
+	contractAddress: eth.Address,
+	operator: eth.Address,
+	approved: boolean = true
 ) {
-  const { contract } = await getContract(contractAddress)
-  const res = await contract.setApprovalForAll(operator, approved)
-  return !!res
+	const { contract } = await getContract(contractAddress)
+	const res = await contract.setApprovalForAll(operator, approved)
+	return !!res
 }
 
 /**
@@ -79,13 +80,13 @@ export async function setApprovalForAll(
  * @param operator Address approved to move the tokens
  */
 export async function isApprovedForAll(
-  contractAddress: eth.Address,
-  assetHolder: eth.Address,
-  operator: eth.Address
+	contractAddress: eth.Address,
+	assetHolder: eth.Address,
+	operator: eth.Address
 ) {
-  const { contract } = await getContract(contractAddress)
-  const res = await contract.isApprovedForAll(assetHolder, operator)
-  return !!res
+	const { contract } = await getContract(contractAddress)
+	const res = await contract.isApprovedForAll(assetHolder, operator)
+	return !!res
 }
 
 /**
@@ -95,35 +96,35 @@ export async function isApprovedForAll(
  * @param tokenIds One or multiple token IDs to check player ownership
  */
 export async function checkTokens(contractAddress: eth.Address, tokenIds?: number | number[]) {
-  const { contract } = await getContract(contractAddress)
-  const fromAddress = await getPlayerAddress()
+	const { contract } = await getContract(contractAddress)
+	const fromAddress = await getPlayerAddress()
 
-  let balance = await contract.balanceOf(fromAddress)
+	let balance = await contract.balanceOf(fromAddress as string)
 
-  if (Number(balance) == 0) {
-    return false
-  } else {
-    if (!tokenIds) {
-      return true
-    }
+	if (Number(balance) == 0) {
+		return false
+	} else {
+		if (!tokenIds) {
+			return true
+		}
 
-    let res = false
-    for (let i = 0; i < Number(balance); i++) {
-      let token = Number(await contract.tokenOfOwnerByIndex(fromAddress, i))
-      if (typeof tokenIds === 'number') {
-        if (token == tokenIds) {
-          res = true
-          break
-        }
-      } else {
-        for (let j = 0; j < tokenIds.length; j++) {
-          if (token == tokenIds[j]) {
-            res = true
-            break
-          }
-        }
-      }
-    }
-    return res
-  }
+		let res = false
+		for (let i = 0; i < Number(balance); i++) {
+			let token = Number(await contract.tokenOfOwnerByIndex(fromAddress as string, i))
+			if (typeof tokenIds === 'number') {
+				if (token == tokenIds) {
+					res = true
+					break
+				}
+			} else {
+				for (let j = 0; j < tokenIds.length; j++) {
+					if (token == tokenIds[j]) {
+						res = true
+						break
+					}
+				}
+			}
+		}
+		return res
+	}
 }

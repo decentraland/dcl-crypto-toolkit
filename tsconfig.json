@@ -1,18 +1,14 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "declaration": true,
-    "declarationDir": "./types",
-    "declarationMap": true,
-    "outDir": "dist",
-    "paths": {
-      "eth-connect": ["./node_modules/eth-connect/eth-connect.d.ts"],
-      "@dcl/ecs-scene-utils": [
-        "./node_modules/@dcl/ecs-scene-utils/dist/index.d.ts"
-      ]
-    }
+    "allowJs": true,
+    "strict": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["dist"],
-  "extends": "./node_modules/decentraland-ecs/types/tsconfig.json"
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+	"paths": {
+		"eth-connect": ["./node_modules/eth-connect/eth-connect.d.ts"]
+	},
+  "extends": "@dcl/sdk/types/tsconfig.ecs7.json"
 }

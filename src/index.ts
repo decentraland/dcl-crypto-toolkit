@@ -1,4 +1,4 @@
-export * as avatar from './avatar/index'
+//export * as avatar from './avatar/index'
 export * as ethereum from './ethereum/index'
 export * as mana from './mana/index'
 export * as currency from './currency/index'
