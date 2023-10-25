@@ -12,7 +12,10 @@ import { getPlayerAddress } from '../shared/utils'
 /**
  * Sign an object with your address using EIP 712
  * 
- * @param messageToSign String to sign
+ * @param messageToSign Object to sign, containing a series of key-value pairs
+ * @param messageName A name for the message, to display when requesting confirmation from the player
+ * @param messageType A type definition for messageToSign
+ * @param domainData An object with data about the operation, incluind name, version, and chainid
  * @returns Initial message and its signature
  */
 export async function signMessageAdvanced(messageToSign: Object, messageName: string, messageType: Object, domainData: Object) {

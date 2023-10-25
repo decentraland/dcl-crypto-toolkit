@@ -313,26 +313,57 @@ const { contract, requestManager } = await getContract(
 
 ## Signing Messages
 
-Request a player to use the private key of their Ethereum wallet to sign a message.
+Request a player to use the private key of their Ethereum wallet to sign a message using the _EIP 712_ standard.
 
 This is a valuable security measure to validate that the player who owns that wallet was truly there, since the signature of a private key can't be forged. Several smart contracts also require passing signed strings as parameters.
 
 ```ts
 import * as crypto from '@dcl/crypto-scene-utils'
 
+let dataType = [
+  { name: 'CollectionAddress', type: 'address' },
+  { name: 'TokenId', type: 'uint256' },
+  { name: 'Price', type: 'uint256' },
+  { name: 'ExpiresAt', type: 'uint256' },
+]
+
+let dataToSign: dataType = {
+  types: {
+    EIP712Domain: domain,
+    ['Sell Item']: itemDefinition,
+  },
+  domain: domainData,
+  primaryType: 'Sell Item',
+  message: item,
+}
+
+let domainData = {
+  name: 'My Dapp',
+  version: '1',
+  chainId: 1,
+}
+
 executeTask(async () => {
-  const message = await crypto.ethereum.signMessage(
-    'msg: this is a top secret message'
+  const message = await crypto.ethereum.signMessageAdvanced(
+    dataToSign, // messageToSign
+    'myData', // messageName
+    dataType, // messageType
+    domainData // domainData
   )
   log(`MESSAGE: `, message)
 })
 ```
 
-> Note: The string for the message to sign must start be preceded by `msg:`.
+Whenever the `signMessageAdvanced()` funcition is called, Metamask will open on the player's browser to request to accept signing the message.
 
-Whenever the `signMessage()` funcition is called, Metamask will open on the player's browser to request to accept signing the message.
+The `signMessageAdvanced()` function requires the following parameters:
 
-The `signMessage()` function returns an object that contains:
+- `messageToSign`: Object to sign, containing a series of key-value pairs
+- `messageName`: A name for the message, to display when requesting confirmation from the player
+- `messageType`: A type definition for messageToSign
+- `domainData`: An object with data about the operation, incluind name, version, and chainid.
+
+The `signMessageAdvanced()` function returns an object that contains:
 
 - `message`: The original message that was signed, preceded by the string `# DCL Signed message↵msg:`
 - `signature`: The string generated from encrypting the original message through the player's private key
