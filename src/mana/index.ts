@@ -1,7 +1,6 @@
 import * as eth from 'eth-connect'
 
-
-import * as ERC20 from '../currency/index'
+import * as ERC20 from '../currency'
 import { getPlayerAddress } from '../shared/utils'
 
 /**
