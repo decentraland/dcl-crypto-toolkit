@@ -1,12 +1,13 @@
 {
-	"name": "@dcl/crypto-toolkit",
+	"name": "dcl-crypto-toolkit",
 	"version": "1.0.0",
 	"description": "A collection of helpers to make it easier to build a Decentraland scene using the SDK.",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"scripts": {
-		"build": "rm -rf temp/ && rollup -c",
-		"link": "npm link && rollup --watch -c ",
+		"build": "tsc -p tsconfig.json",
+		"start": "tsc -p tsconfig.json --watch",
+		"link": "npm link && npm start",
 		"test": "jest --detectOpenHandles --silent=false --verbose --colors --runInBand"
 	},
 	"typings": "./dist/index.d.ts",
@@ -17,7 +18,9 @@
 		"dcl",
 		"decentraland",
 		"sdk",
-		"library"
+		"library",
+		"crypto",
+		"dcl crypto"
 	],
 	"author": "Decentraland",
 	"license": "Apache-2.0",
@@ -26,29 +29,17 @@
 		"url": "git+https://github.com/decentraland/dcl-crypto-toolkit.git"
 	},
 	"files": [
-		"dist",
-		"!dist/types"
+		"dist"
 	],
 	"devDependencies": {
-		"@microsoft/api-documenter": "^7.17.11",
-		"@rollup/plugin-commonjs": "^21.0.2",
-		"@rollup/plugin-node-resolve": "^13.1.3",
-		"@rollup/plugin-typescript": "^8.3.1",
-		"@types/jest": "^27.4.1",
-		"jest": "^27.5.1",
-		"rollup": "^2.70.1",
-		"rollup-plugin-terser": "^7.0.2",
-		"ts-jest": "^27.1.4",
-		"tslib": "^2.5.0",
 		"@dcl/js-runtime": "latest",
-    "@dcl/sdk": "latest"
+		"@dcl/sdk": "latest",
+		"eth-connect": "latest",
+		"typescript": "^5.2.2"
 	},
 	"engines": {
 		"node": ">=16.0.0",
 		"npm": ">=8.0.0",
 		"yarn": "please use npm"
-	},
-	"dependencies": {
-		"eth-connect": "latest"
 	}
 }
