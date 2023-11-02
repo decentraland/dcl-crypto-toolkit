@@ -1,14 +1,13 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "strict": true
+    "strict": true,
+    "outDir": "dist",
+    "declaration": true
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx"
   ],
-	"paths": {
-		"eth-connect": ["./node_modules/eth-connect/eth-connect.d.ts"]
-	},
   "extends": "@dcl/sdk/types/tsconfig.ecs7.json"
 }

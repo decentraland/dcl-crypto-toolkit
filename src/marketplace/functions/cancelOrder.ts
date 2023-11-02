@@ -1,7 +1,5 @@
 import * as eth from 'eth-connect'
 
-
-
 import { getContract } from '../contract'
 import { getPlayerAddress } from '../../shared/utils'
 
