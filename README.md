@@ -25,10 +25,10 @@ This library includes a number of helpful pre-built tools that help you deal wit
   - [NFTs](#nfts-1)
 - [Call functions from any contract](#Call-functions-from-any-contract)
 - [Avatar](#Avatar)
-  - [Get user information](#get-user-information)
+  <!-- - [Get user information](#get-user-information)
   - [Get user inventory](#get-user-inventory)
   - [Check if a player has an item](#check-if-a-player-has-an-item)
-  - [Check if a player has one of several items](#check-if-a-player-has-one-of-several-items)
+  - [Check if a player has one of several items](#check-if-a-player-has-one-of-several-items) -->
   - [Get data of all wearables](#get-data-of-all-wearables)
 
 ## Using the Crypto library
@@ -106,7 +106,7 @@ import * as crypto from '@dcl/crypto-scene-utils'
 
 executeTask(async () => {
   let balance = await crypto.mana.myBalance()
-  log(balance)
+  console.log(balance)
 })
 ```
 
@@ -119,7 +119,7 @@ let myWallet = `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 
 executeTask(async () => {
   let balance = await crypto.mana.balance(myWallet)
-  log(balance)
+  console.log(balance)
 })
 ```
 
@@ -191,7 +191,7 @@ executeTask(async () => {
     '0x6B175474E89094C44Da98b954EedeAC495271d0F',
     myWallet
   )
-  log(balance)
+  console.log(balance)
 })
 ```
 
@@ -207,7 +207,7 @@ executeTask(async () => {
   const contract = await crypto.currency.getContract(
     crypto.contract.mainnet.MANAToken
   )
-  log(contract.contract.totalSupply())
+  console.log(contract.contract.totalSupply())
 })
 ```
 
@@ -299,7 +299,7 @@ import * as crypto from '@dcl/crypto-scene-utils'
 
 executeTask(async () => {
   const contract = await crypto.nft.getContract(crypto..contract.mainnet.Halloween2019Collection)
-  log(contract.contract.totalSupply())
+  console.log(contract.contract.totalSupply())
 })
 ```
 
@@ -350,7 +350,7 @@ executeTask(async () => {
     dataType, // messageType
     domainData // domainData
   )
-  log(`MESSAGE: `, message)
+  console.log(`MESSAGE: `, message)
 })
 ```
 
@@ -377,7 +377,7 @@ A separate list exists for contracts on `mainnet`, `ropsten`, `kovan` and `rinke
 ```ts
 import { mainnet } from '../node_modules/@dcl/crypto-utils/utils/contract'
 
-log(crypto.contract.mainnet.MANAToken)
+console.log(crypto.contract.mainnet.MANAToken)
 ```
 
 ## The Marketplace
@@ -430,7 +430,7 @@ import * as crypto from '@dcl/crypto-scene-utils'
 
 executeTask(async () => {
   let permissions = await crypto.marketplace.isAuthorizedAndHasBalance(1000)
-  log(permissions)
+  console.log(permissions)
 })
 ```
 
@@ -458,7 +458,7 @@ import * as crypto from '@dcl/crypto-scene-utils'
 
 executeTask(async () => {
   let permissions = await crypto.marketplace.isAuthorizedAll()
-  log(permissions)
+  console.log(permissions)
 })
 ```
 
@@ -595,7 +595,7 @@ executeTask(async () => {
     crypto.contract.mainnet.MANAToken,
     crypto.contract.mainnet.Marketplace
   )
-  log(approval)
+  console.log(approval)
 })
 ```
 
@@ -615,7 +615,7 @@ executeTask(async () => {
     crypto.contract.mainnet.MANAToken,
     crypto.contract.mainnet.Marketplace
   )
-  log(approval)
+  console.log(approval)
 })
 ```
 
@@ -656,7 +656,7 @@ executeTask(async () => {
     crypto.contract.mainnet.Halloween2019Collection,
     crypto.contract.mainnet.Marketplace
   )
-  log(approval)
+  console.log(approval)
 })
 ```
 
@@ -708,6 +708,7 @@ You can obtain the ABI of a contract on etherscan. For example, if you go to the
 
 ## Avatar
 
+<!--
 ### Get user information
 
 To get information about an user, use the `getUserInfo()` function.
@@ -726,7 +727,7 @@ import * as crypto from '@dcl/crypto-scene-utils'
 crypto.avatar
   .getUserInfo('0x521b0fef9cdcf250abaf8e7bc798cbe13fa98692')
   .then((userInfo) => {
-    log(userInfo.metadata.avatars[0].name)
+    console.log(userInfo.metadata.avatars[0].name)
   })
 ```
 
@@ -742,7 +743,7 @@ The `getUserData()` function returns the following information:
     the player's email and bio if present.
 - `timestamp`: A timestamp for the time this data was fetched.
 
-> Note: For any Ethereum transactions with the player, always use the `ethAddress` field, instead of the `userId`.
+> Note: For any Ethereum transactions with the player, always use the `ethAddress` field, instead of the `userId`. -->
 
 <!--
 ### Get user inventory
@@ -761,7 +762,7 @@ This example retrieves the inventory of an address and print a list of items in 
 import * as crypto from '@dcl/crypto-scene-utils'
 
 crypto.avatar.getUserInventory('0x521b0fef9cdcf250abaf8e7bc798cbe13fa98692').then((inventory) => {
-  log(inventory)
+  console.log(inventory)
 })
 ```
 
@@ -790,7 +791,7 @@ crypto.avatar
   .itemInInventory('dcl://dcl_launch/razor_blade_upper_body', true)
   .then((isItemEquiped) => {
     if (isItemEquiped) log('The Razor Blade jacket is equiped')
-    else log('This item is not equiped')
+    else console.log('This item is not equiped')
   })
 ```
 
@@ -821,7 +822,7 @@ crypto.avatar
   )
   .then((isItemEquiped) => {
     if (isItemEquiped) log('One of the items is equiped')
-    else log('None of the items are equiped')
+    else console.log('None of the items are equiped')
   })
 ```
 
@@ -848,7 +849,7 @@ crypto.avatar
     true
   )
   .then((item) => {
-   log('rarest item equipped: ', rarityLevel[item] )
+   console.log('rarest item equipped: ', rarityLevel[item] )
   })
 ```
 
@@ -875,7 +876,7 @@ executeTask(async () => {
   const someWearables = await crypto.wearable.getListOfWearables({
     collectionIds: ['urn:decentraland:ethereum:collections-v1:mf_sammichgamer'],
   })
-  log(someWearables)
+  console.log(someWearables)
 })
 ```
 
