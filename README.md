@@ -38,15 +38,13 @@ To use any of the helpers provided by the utils library
 1. Install it as an `npm` package. Run this command in your scene's project folder:
 
 ```
-npm i @dcl/crypto-scene-utils @dcl/ecs-scene-utils eth-connect -B
+npm i dcl-crypto-toolkit
 ```
-
-> Note: This command also installs the latest version of the @dcl/ecs-scene-utils and eth-connect libraries, that are dependencies of the crypto utils library
 
 2. Import the library into the scene's script. Add this line at the start of your `game.ts` file, or any other TypeScript files that require it:
 
 ```ts
-import crypto from 'dcl-crypto-toolkit'
+import * as crypto from 'dcl-crypto-toolkit'
 ```
 
 3. In your TypeScript file, write `crypto.` and let the suggestions of your IDE show the available helpers.
