@@ -2,8 +2,8 @@
   "compilerOptions": {
     "allowJs": true,
     "strict": true,
-    "outDir": "dist",
-    "declaration": true
+    "declaration": true,
+    "outDir": "dist"
   },
   "include": [
     "src/**/*.ts",

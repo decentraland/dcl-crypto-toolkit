@@ -2,18 +2,14 @@
 	"name": "dcl-crypto-toolkit",
 	"version": "1.0.0",
 	"description": "A collection of helpers to make it easier to build a Decentraland scene using the SDK.",
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
 	"scripts": {
 		"build": "tsc -p tsconfig.json",
 		"start": "tsc -p tsconfig.json --watch",
 		"link": "npm link && npm start",
 		"test": "jest --detectOpenHandles --silent=false --verbose --colors --runInBand"
 	},
-	"typings": "./dist/index.d.ts",
-	"decentralandLibrary": {
-		"main": "./dist/index.js"
-	},
+	"main": "dist/index.js",
+  "types": "dist/index.d.ts",
 	"keywords": [
 		"dcl",
 		"decentraland",
@@ -28,9 +24,6 @@
 		"type": "git",
 		"url": "git+https://github.com/decentraland/dcl-crypto-toolkit.git"
 	},
-	"files": [
-		"dist"
-	],
 	"devDependencies": {
 		"@dcl/js-runtime": "latest",
 		"@dcl/sdk": "latest",
@@ -41,5 +34,8 @@
 		"node": ">=16.0.0",
 		"npm": ">=8.0.0",
 		"yarn": "please use npm"
-	}
+	},
+	"files": [
+		"dist/**/*"
+	]
 }
